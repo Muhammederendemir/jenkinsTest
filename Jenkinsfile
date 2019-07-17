@@ -1,13 +1,10 @@
-pipeline{
-    agent any
-
-    stages{
-
-         stage('Build') {
-                    steps {
-                        sh 'make' (1)
-                        archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true (2)
-                    }
-                }
+pipeline {
+    agent { docker { image 'maven:3.3.3' } }
+    stages {
+        stage('build') {
+            steps {
+                sh 'mvn --version'
+            }
+        }
     }
 }
