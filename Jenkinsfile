@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'echo "Hello World"'
                 sh '''
-                sendNotifications 'STARTED'
+                sendNotifications 'STARTED1'
                     echo "Multiline shell steps works too"
                     ls -lah
                 '''
