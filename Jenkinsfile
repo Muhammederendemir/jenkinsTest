@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'echo "Hello World"'
                 sh '''
-                slackSend message:"Build Started"
+                sendNotifications 'STARTED'
                     echo "Multiline shell steps works too"
                     ls -lah
                 '''
