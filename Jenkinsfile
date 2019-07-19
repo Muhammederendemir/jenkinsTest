@@ -1,3 +1,5 @@
+#!groovy
+@Library('bitwiseman-shared@blog/declarative/notifications') _
 pipeline {
     agent any
     stages {
@@ -5,6 +7,7 @@ pipeline {
             steps {
                 sh 'echo "Hello World"'
                 sh '''
+                slackSend "Build Started"
                     echo "Multiline shell steps works too"
                     ls -lah
                 '''
