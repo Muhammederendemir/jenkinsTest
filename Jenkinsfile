@@ -9,9 +9,10 @@ pipeline {
             if (env.BRANCH_NAME == 'master') {
                 slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'jenkins', color: 'good', iconEmoji: '', message: 'Brach master', teamDomain: 'javadevelopercorp58', tokenCredentialId: 'slack_Token_webhook', username: ''
             } else {
-                echo 'I'
+                echo 'Ie'
             }
             }
         }
     }
+
 }
