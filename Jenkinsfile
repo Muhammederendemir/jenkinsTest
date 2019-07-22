@@ -1,6 +1,5 @@
 node {
 
-    sh './set-up.sh'
     try {
         sh 'might fail'
         echo 'Succeeded!'
