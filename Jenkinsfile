@@ -1,4 +1,19 @@
 node {
+
+    sh './set-up.sh'
+    try {
+        sh 'might fail'
+        echo 'Succeeded!'
+    } catch (err) {
+        echo "Failed: ${err}"
+        slackSend channel: '#jenkins',
+                color: 'good',
+                message: "Failed: ${err}"
+    } finally {
+        sh './tear-down.sh'
+    }
+    echo 'Printed whether above succeeded or failed.'
+
     try {
         // do something that doesn't fail
         echos
