@@ -6,7 +6,7 @@ pipeline {
            stage('Slack Notification'){
            steps{
                 slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'jenkins', color: 'good', iconEmoji: '', message: 'Hello slack', teamDomain: 'javadevelopercorp58', tokenCredentialId: 'slack_Token_webhook', username: ''
-                  slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'jenkins', color: 'good', iconEmoji: '', message: 'slack meşaj işlemi çalışıyor', teamDomain: 'javadevelopercorp58', tokenCredentialId: 'slack_Token_webhook', username: ''
+                  slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'Muhammed Eren Demir', color: 'good', iconEmoji: '', message: 'slack meşaj işlemi çalışıyor', teamDomain: 'javadevelopercorp58', tokenCredentialId: 'slack_Token_webhook', username: ''
         }
         }
     }
