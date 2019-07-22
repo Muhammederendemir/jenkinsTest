@@ -7,8 +7,11 @@ node {
     } catch (Exception err) {
         currentBuild.result = 'FAILURE'
          echo "hata"
+            slackSend channel: '#jenkins',
+                            color: 'good',
+                            message: err.getMessage()
         echo    err.getMessage()
-        echo err.Number()
+
     }
     echo "RESULT: ${currentBuild.result}"
 }
