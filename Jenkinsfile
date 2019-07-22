@@ -1,18 +1,29 @@
 
-
 pipeline {
-    agent any
-    stages {
-
-        stage('Example') {
-        steps{
-            if (env.BRANCH_NAME == 'master') {
-                slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'jenkins', color: 'good', iconEmoji: '', message: 'Brach master', teamDomain: 'javadevelopercorp58', tokenCredentialId: 'slack_Token_webhook', username: ''
-            } else {
-                echo 'Ie'
-            }
-            }
-        }
-    }
-
-}
+   agent any
+   stages {
+       stage('Compile') {
+          steps {
+               catchError {
+                   sh './gradlew compileJava --stacktrace'
+               }
+           }
+           post {
+               success {
+                   echo 'Compile stage successful'
+               }
+               failure {
+                   echo 'Compile stage failed'
+               }
+           }
+       }
+       /* ... other stages ... */
+   }
+   post {
+       success {
+           echo 'whole pipeline successful'
+       }
+       failure {
+           echo 'pipeline failed, at least one step failed'
+       }
+   }
