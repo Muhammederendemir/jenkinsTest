@@ -5,6 +5,7 @@ node {
         echo 'Succeeded!'
     } catch (err) {
         echo "Failed: ${err}"
+        echo "${BUILD.URL}"
         slackSend channel: '#jenkins',
                 color: 'good',
                 message: "Failed: ${err}"
