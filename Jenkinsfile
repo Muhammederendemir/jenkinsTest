@@ -9,7 +9,7 @@ node {
          echo "hata"
             slackSend channel: '#jenkins',
                             color: 'good',
-                            message: err.toString()
+                            message: err.getMessage()+"    "+err.printStackTrace()
         echo err.getMessage()
 
     }
