@@ -11,7 +11,7 @@ pipeline {
       success {
           slackSend channel: '#jenkins',
                     color: 'good',
-                    message: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
+                    message: "The pipeline ${currentBuild.result} completed successfully."
       }
   }
 }
