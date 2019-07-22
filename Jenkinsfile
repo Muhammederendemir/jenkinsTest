@@ -6,7 +6,7 @@ node {
         currentBuild.result = 'SUCCESS'
     } catch (Exception err) {
         currentBuild.result = 'FAILURE'
-        echo "{evn.err}"
+        echo err
     }
     echo "RESULT: ${currentBuild.result}"
 }
