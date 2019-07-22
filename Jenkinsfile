@@ -13,7 +13,7 @@ pipeline {
             deleteDir() /* clean up our workspace */
         }
         success {
-       slackSend baseUrl: 'https://hooks.slack.com/services/', channel: 'jenkins', color: 'good', iconEmoji: '', message: 'succes', teamDomain: 'javadevelopercorp58', tokenCredentialId:
+            echo 'I succeeeded!'
         }
         unstable {
             echo 'I am unstable :/'
