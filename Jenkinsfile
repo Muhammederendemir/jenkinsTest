@@ -1,17 +1,11 @@
-pipeline {
-    agent any
-    stages {
-        stage('No-op') {
-            steps {
-                sh 'ls'
-            }
-        }
+node {
+    try {
+        // do something that doesn't fail
+        echo "Im not going to fail"
+        currentBuild.result = 'SUCCESS'
+    } catch (Exception err) {
+        currentBuild.result = 'FAILURE'
+        echo "{evn.err}"
     }
-  post {
-      success {
-          slackSend channel: '#jenkins',
-                    color: 'good',
-                    message: "The pipeline ${env.BUILD_NUMBER} completed successfully."
-      }
-  }
+    echo "RESULT: ${currentBuild.result}"
 }
