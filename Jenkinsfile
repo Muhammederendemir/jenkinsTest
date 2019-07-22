@@ -6,8 +6,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo "Hello World"'
-                slackSend "Build Started
-                        }
+                sh '''
+                slackSend "Build Started"
+                    echo "Multiline shell steps works too"
+                    ls -lah
+                '''
+            }
         }
     }
 }
