@@ -10,7 +10,7 @@ node {
             slackSend channel: '#jenkins',
                             color: 'good',
                             message: err.getMessage()
-        echo    err.getMessage()
+        echo err.getMessage()
 
     }
     echo "RESULT: ${currentBuild.result}"
