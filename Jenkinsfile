@@ -32,6 +32,8 @@ node {
         echo "GIT_COMMITTER_NAME ${env.GIT_COMMITTER_NAME}"
         echo "GIT_AUTHOR_NAME ${env.GIT_AUTHOR_NAME}"
 
+        buildFailureAnalyzer(false)
+
 
     }
     echo "RESULT: ${currentBuild.result}"
