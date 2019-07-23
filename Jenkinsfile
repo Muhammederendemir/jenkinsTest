@@ -124,7 +124,7 @@ node{
             currentBuild.result = 'FAILURE'
             message=getBuildLog(currentBuild.rawBuild.getLog(1000))
             throw err
-
+            notifyStage(message)
         } finally {
 
             notifyStage(message)
