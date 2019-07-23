@@ -1,5 +1,5 @@
 def msg
-pipeline{
+node{
 
     stage('checkout') {
         def message=null
