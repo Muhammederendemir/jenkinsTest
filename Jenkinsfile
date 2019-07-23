@@ -15,7 +15,7 @@ node {
             notifyJob()
             msg+=message
             notifyStage(message)
-            sendMail(msg)
+
         }
     }
 
@@ -33,6 +33,7 @@ node {
         } finally {
             msg+=message
             notifyStage(message)
+            sendMail(msg)
         }
 
     }
