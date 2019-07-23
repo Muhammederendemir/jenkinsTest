@@ -33,6 +33,7 @@ node {
         } finally {
 
             notifyStage(message)
+            notifyStage(msg)
             sendMail(msg)
         }
 
