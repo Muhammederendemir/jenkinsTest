@@ -206,3 +206,13 @@ def sendMail(){
             subject: "Example Build: ${env.JOB_NAME} - Succes",
             body:"${msg}"
 }
+pipeline {
+post {
+    always {
+        junit '**/target/*.xml'
+    }
+    failure {
+        echo "ssdsfgfhgfsgfhs"
+    }
+}
+}
