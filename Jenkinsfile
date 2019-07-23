@@ -164,7 +164,7 @@ def notifyStage(String message){
     slackSend(channel:channelName ,color: colorCode, message: message)
     slackSend(channel:channelName ,color: '#000000', message: '')
 
-    msg+=stageName+"\n"+buildState+"\n"+message+"\n\n"
+    msg+="\n"+stageName+"\n"+buildState+"\n"+message+"\n\n"
 }
 
 
