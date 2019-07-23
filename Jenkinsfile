@@ -203,7 +203,7 @@ def getBuildLog(list) {
 def sendMail(msg){
 
     mail to: 'mhmmderen2@gmail.com',
-            subject: "Example Build: ${env.JOB_NAME} - Succees",
+            subject: "Example Build: ${env.JOB_NAME} - Succes",
             body: msg
 }
 
