@@ -1,4 +1,4 @@
-def msg=''
+def msg
 node {
 
     stage('checkout') {
@@ -164,7 +164,7 @@ def notifyStage(String message){
     slackSend(channel:channelName ,color: colorCode, message: message)
     slackSend(channel:channelName ,color: '#000000', message: '')
 
-    msg=msg+stageName+"\n"+buildState+"\n\n"
+    msg+="\n"+stageName+"\n"+buildState+"\n\n"
 }
 
 
@@ -189,7 +189,7 @@ def notifyJob(){
     slackSend(channel:channelName ,color: colorCode, message: buildUrl)
     slackSend(channel:channelName ,color: '#000000', message: '')
     slackSend(channel:channelName ,color: '#000000', message: '')
-    msg=msg+jobName+"\n"+buildNumber+"\n"+buildUrl+"\n\n\n"
+    msg=jobName+"\n"+buildNumber+"\n"+buildUrl+"\n\n\n"
 }
 
 @NonCPS // has to be NonCPS or the build breaks on the call to .each
