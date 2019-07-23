@@ -123,8 +123,9 @@ node{
         } catch (err) {
             currentBuild.result = 'FAILURE'
             message=getBuildLog(currentBuild.rawBuild.getLog(1000))
-            throw err
             notifyStage(message)
+            throw err
+
         } finally {
 
             notifyStage(message)
