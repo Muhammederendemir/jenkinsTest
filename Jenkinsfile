@@ -32,7 +32,6 @@ node {
         echo "GIT_COMMITTER_NAME ${env.GIT_COMMITTER_NAME}"
         echo "GIT_AUTHOR_NAME ${env.GIT_AUTHOR_NAME}"
 
-        buildFailureAnalyzer()
 
         mail to: 'mhmmderen2@gmail.com', from: 'mhmmderen3@gmail.com',
                 subject: "Example Build: ${env.JOB_NAME} - Failed",
