@@ -14,7 +14,7 @@ node {
         } finally {
 
             notifyJob()
-            notifyStage(message)
+            notifyStage(message,msg)
 
         }
     }
@@ -32,7 +32,7 @@ node {
 
         } finally {
 
-            notifyStage(message)
+            notifyStage(message,msg)
             notifyStage(msg)
             sendMail(msg)
         }
@@ -53,7 +53,7 @@ node {
 
         } finally {
 
-            notifyStage(message)
+            notifyStage(message,msg)
         }
 
     }
@@ -71,7 +71,7 @@ node {
 
         } finally {
 
-            notifyStage(message)
+            notifyStage(message,msg)
         }
     }
 
@@ -88,7 +88,7 @@ node {
 
         } finally {
 
-            notifyStage(message)
+            notifyStage(message,msg)
         }
 
     }
@@ -107,7 +107,7 @@ node {
 
         } finally {
 
-            notifyStage(message)
+            notifyStage(message,msg)
         }
 
     }
@@ -125,7 +125,7 @@ node {
 
         } finally {
 
-            notifyStage(message)
+            notifyStage(message,msg)
 
         }
     }
@@ -133,7 +133,7 @@ node {
 
 }
 
-def notifyStage(String message){
+def notifyStage(String message,String msg){
     colorCode = '#FF0000'
     color='red'
     channelName='#jenkins'
@@ -168,7 +168,7 @@ def notifyStage(String message){
 }
 
 
-def notifyJob(){
+def notifyJob(String msg){
     colorCode = '#FF0000'
     color='red'
     channelName='#jenkins'
@@ -189,7 +189,7 @@ def notifyJob(){
     slackSend(channel:channelName ,color: colorCode, message: buildUrl)
     slackSend(channel:channelName ,color: '#000000', message: '')
     slackSend(channel:channelName ,color: '#000000', message: '')
-    def msg =jobName+"\n"+buildNumber+"\n"+buildUrl+"\n\n\n"
+    msg +=jobName+"\n"+buildNumber+"\n"+buildUrl+"\n\n\n"
 }
 
 @NonCPS // has to be NonCPS or the build breaks on the call to .each
