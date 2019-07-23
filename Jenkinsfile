@@ -200,7 +200,7 @@ def getBuildLog(list) {
     return log
 }
 
-def sendMail(String msg){
+def sendMail(msg){
 
     mail to: 'mhmmderen2@gmail.com',
             subject: "Example Build: ${env.JOB_NAME} - Succees",
