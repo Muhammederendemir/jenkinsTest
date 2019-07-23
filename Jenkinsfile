@@ -35,6 +35,8 @@ node {
 
         mail to: 'mhmmderen2@gmail.com', from: 'mhmmderen3@gmail.com',
                 subject: "Example Build: ${env.JOB_NAME} - Failed",
-                body: "Job Failed - \"${env.JOB_NAME}\" build: ${env.BUILD_NUMBER}\n\nView the log at:\n ${env.BUILD_URL}\n\nBlue Ocean:\n${env.RUN_DISPLAY_URL}"
+                body: "Job Failed - \"${env.JOB_NAME}\"\n\n " +
+                        "Build Number: ${env.BUILD_NUMBER}\n\n " +
+                        "Build Url :\n ${env.BUILD_URL}\n\n\n\n"
     }
 }
