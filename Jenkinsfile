@@ -13,7 +13,6 @@ node {
 
         } finally {
             notifyJob()
-
             notifyStage(message)
 
         }
@@ -33,7 +32,6 @@ node {
         } finally {
 
             notifyStage(message)
-            notifyStage(msg)
             sendMail(msg)
         }
 
