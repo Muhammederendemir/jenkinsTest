@@ -1,42 +1,204 @@
 node {
+    def msg=''
+    stage('checkout') {
+        def message=null
+        try {
+            checkout scm
+            currentBuild.result = 'SUCCESS'
+            message='Build message : '+STAGE_NAME+' completed'
+        } catch (err) {
+            currentBuild.result = 'FAILURE'
+            message=getBuildLog(currentBuild.rawBuild.getLog(1000))
+            throw err
 
-    try {
-        // do something that doesn't fail
-        echos
-        echo "Im not going to fail"
-        currentBuild.result = 'SUCCESS'
-    } catch (Exception err) {
-        currentBuild.result = 'SUCCESS'
-         echo "hata"
-            slackSend channel: '#jenkins',
-                            color: 'good',
-                            message: err.getMessage()
-        echo err.getMessage()
-        echo "gıthubbbbb"
-        echo "BUILD_ID ${env.BUILD_ID}"
-        echo "BUILD_DISPLAY_NAME ${env.BUILD_DISPLAY_NAME}"
-        echo "JOB_BASE_NAME ${env.$JOB_BASE_NAME}"
-        echo "BUILD_TAG ${env.BUILD_TAG}"
-        echo "EXECUTOR_NUMBER ${env.EXECUTOR_NUMBER}"
-        echo "NODE_NAME ${env.NODE_NAME}"
-        echo "NODE_LABELS ${env.NODE_LABELS}"
-        echo "WORKSPACE ${env.WORKSPACE}"
-        echo "JENKINS_HOME ${env.JENKINS_HOME}"
-        echo "JENKINS_URL ${env.JENKINS_URL}"
-        echo "GIT_COMMIT ${env.GIT_COMMIT}"
-        echo ".GIT_PREVIOUS_COMMIT ${env.GIT_PREVIOUS_COMMIT}"
-        echo "GIT_PREVIOUS_SUCCESSFUL_COMMIT ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
-        echo ".GIT_BRANCH ${env.GIT_BRANCH}"
-        echo "GIT_LOCAL_BRANCH ${env.GIT_LOCAL_BRANCH}"
-        echo "GIT_URL ${env.GIT_URL}"
-        echo "GIT_COMMITTER_NAME ${env.GIT_COMMITTER_NAME}"
-        echo "GIT_AUTHOR_NAME ${env.GIT_AUTHOR_NAME}"
-
-
-        mail to: 'mhmmderen2@gmail.com',
-                subject: "Example Build: ${env.JOB_NAME} - Succees",
-                body: "Job Failed - \"${env.JOB_NAME}\"\n\n " +
-                        "Build Number: ${env.BUILD_NUMBER}\n\n " +
-                        "Build Url  :\n ${env.BUILD_URL}\n\n\n\n"
+        } finally {
+            notifyJob()
+            msg+=message
+            notifyStage(message)
+        }
     }
+
+    stage('check java') {
+        def message=null
+        try {
+            sh "java -version"
+            currentBuild.result = 'SUCCESS'
+            message='Build message : '+STAGE_NAME+' completed'
+        } catch (err) {
+            currentBuild.result = 'FAILURE'
+            message=getBuildLog(currentBuild.rawBuild.getLog(1000))
+            throw err
+
+        } finally {
+            msg+=message
+            notifyStage(message)
+        }
+
+    }
+
+    stage('clean') {
+        def message=null
+        try {
+            sh "chmod +x mvnw"
+            sh "./mvnw clean"
+            currentBuild.result = 'SUCCESS'
+            message='Build message : '+STAGE_NAME+' completed'
+        } catch (err) {
+            currentBuild.result = 'FAILURE'
+            message=getBuildLog(currentBuild.rawBuild.getLog(1000))
+            throw err
+
+        } finally {
+            msg+=message
+            notifyStage(message)
+        }
+
+    }
+
+    stage('install tools') {
+        def message=null
+        try {
+            sh "./mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-npm -DnodeVersion=v10.15.0 -DnpmVersion=6.4.1"
+            currentBuild.result = 'SUCCESS'
+            message='Build message : '+STAGE_NAME+' completed'
+        } catch (err) {
+            currentBuild.result = 'FAILURE'
+            message=getBuildLog(currentBuild.rawBuild.getLog(1000))
+            throw err
+
+        } finally {
+            msg+=message
+            notifyStage(message)
+        }
+    }
+
+    stage('npm install') {
+        def message=null
+        try {
+            sh "./mvnw com.github.eirslett:frontend-maven-plugin:npm"
+            currentBuild.result = 'SUCCESS'
+            message='Build message : '+STAGE_NAME+' completed'
+        } catch (err) {
+            currentBuild.result = 'FAILURE'
+            message=getBuildLog(currentBuild.rawBuild.getLog(1000))
+            throw err
+
+        } finally {
+            msg+=message
+            notifyStage(message)
+        }
+
+    }
+
+    stage('packaging') {
+        def message=null
+        try {
+            sh "./mvnw verify -Pdev -DskipTests"
+            archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+            currentBuild.result = 'SUCCESS'
+            message='Build message : '+STAGE_NAME+' completed'
+        } catch (err) {
+            currentBuild.result = 'FAILURE'
+            message=getBuildLog(currentBuild.rawBuild.getLog(1000))
+            throw err
+
+        } finally {
+            msg+=message
+            notifyStage(message)
+        }
+
+    }
+
+    stage('backend tests') {
+        def message=null
+        try {
+            sh "./mvnw test"
+            currentBuild.result = 'SUCCESS'
+            message='Build message : '+STAGE_NAME+' completed'
+        } catch (err) {
+            currentBuild.result = 'FAILURE'
+            message=getBuildLog(currentBuild.rawBuild.getLog(1000))
+            throw err
+
+        } finally {
+            msg+=message
+            notifyStage(message)
+            sendMail(msg)
+        }
+    }
+
+
 }
+
+def notifyStage(String message){
+    colorCode = '#FF0000'
+    color='red'
+    channelName='#jenkins'
+
+    def stageName= "Stage Name  : ${STAGE_NAME}\n"
+    color='ROSYBROWN'
+    colorCode = '#BC8F8F'
+    slackSend(channel:channelName ,color: colorCode, message: stageName)
+
+    def buildState="Build Status : ${currentBuild.currentResult}"
+    color='BLUE'
+    colorCode = '#002366'
+    slackSend(channel:channelName ,color: colorCode, message: buildState)
+
+    // Override default values based on build status
+    if (currentBuild.currentResult == 'SUCCESS') {
+        color = 'GREEN'
+        colorCode = '#00FF00'
+    }
+    else if (currentBuild.currentResult == 'UNSTABLE') {
+        color = 'BROWN'
+        colorCode = '#654321'
+    }
+    else if(currentBuild.currentResult == 'FAILURE'){
+        color = 'RED'
+        colorCode = '#FF0000'
+    }
+    slackSend(channel:channelName ,color: colorCode, message: message)
+    slackSend(channel:channelName ,color: '#000000', message: '')
+}
+
+
+def notifyJob(){
+    colorCode = '#FF0000'
+    color='red'
+    channelName='#jenkins'
+
+    def jobName="Job Name : ${env.JOB_NAME}\n"
+    color='PURPLE'
+    colorCode = '#4e5180'
+    slackSend(channel:channelName ,color: colorCode, message: jobName)
+
+    def buildNumber="Build Number : ${env.BUILD_NUMBER}\n"
+    color='ORANGE'
+    colorCode = '#e86180'
+    slackSend(channel:channelName ,color: colorCode, message: buildNumber)
+
+    def buildUrl= "Build Url  : ${env.BUILD_URL}\n"
+    color='GREY'
+    colorCode = '#808080'
+    slackSend(channel:channelName ,color: colorCode, message: buildUrl)
+    slackSend(channel:channelName ,color: '#000000', message: '')
+    slackSend(channel:channelName ,color: '#000000', message: '')
+}
+
+@NonCPS // has to be NonCPS or the build breaks on the call to .each
+def getBuildLog(list) {
+    def log='Hata Mesajı : '
+    list.each { item ->
+        log=log+"${item}"+"\n"
+    }
+    return log
+}
+
+def sendMail(String msg){
+
+    mail to: 'mhmmderen2@gmail.com',
+            subject: "Example Build: ${env.JOB_NAME} - Succees",
+            body: msg
+}
+
