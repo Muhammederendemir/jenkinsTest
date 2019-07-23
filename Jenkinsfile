@@ -12,9 +12,9 @@ node {
             throw err
 
         } finally {
-
             notifyJob()
-            notifyStage(message,msg)
+
+            notifyStage(message)
 
         }
     }
@@ -32,7 +32,7 @@ node {
 
         } finally {
 
-            notifyStage(message,msg)
+            notifyStage(message)
             notifyStage(msg)
             sendMail(msg)
         }
@@ -53,7 +53,7 @@ node {
 
         } finally {
 
-            notifyStage(message,msg)
+            notifyStage(message)
         }
 
     }
@@ -71,7 +71,7 @@ node {
 
         } finally {
 
-            notifyStage(message,msg)
+            notifyStage(message)
         }
     }
 
@@ -88,7 +88,7 @@ node {
 
         } finally {
 
-            notifyStage(message,msg)
+            notifyStage(message)
         }
 
     }
@@ -107,7 +107,7 @@ node {
 
         } finally {
 
-            notifyStage(message,msg)
+            notifyStage(message)
         }
 
     }
@@ -125,7 +125,7 @@ node {
 
         } finally {
 
-            notifyStage(message,msg)
+            notifyStage(message)
 
         }
     }
@@ -133,7 +133,7 @@ node {
 
 }
 
-def notifyStage(String message,String msg){
+def notifyStage(String message){
     colorCode = '#FF0000'
     color='red'
     channelName='#jenkins'
@@ -164,11 +164,11 @@ def notifyStage(String message,String msg){
     slackSend(channel:channelName ,color: colorCode, message: message)
     slackSend(channel:channelName ,color: '#000000', message: '')
 
-    msg+=stageName+"\n"+buildState+"\n\n"
+    def msg=stageName+"\n"+buildState+"\n\n"
 }
 
 
-def notifyJob(String msg){
+def notifyJob(){
     colorCode = '#FF0000'
     color='red'
     channelName='#jenkins'
@@ -189,7 +189,8 @@ def notifyJob(String msg){
     slackSend(channel:channelName ,color: colorCode, message: buildUrl)
     slackSend(channel:channelName ,color: '#000000', message: '')
     slackSend(channel:channelName ,color: '#000000', message: '')
-    msg +=jobName+"\n"+buildNumber+"\n"+buildUrl+"\n\n\n"
+    def msg=jobName+"\n"+buildNumber+"\n"+buildUrl+"\n\n\n"
+    sendMail(msg)
 }
 
 @NonCPS // has to be NonCPS or the build breaks on the call to .each
