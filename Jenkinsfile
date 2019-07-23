@@ -1,5 +1,5 @@
 def msg
-node {
+pipeline{
 
     stage('checkout') {
         def message=null
@@ -129,8 +129,6 @@ node {
 
         }
     }
-
-
 }
 
 def notifyStage(String message){
