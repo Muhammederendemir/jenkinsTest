@@ -34,7 +34,7 @@ node{
         } finally {
 
             notifyStage(message)
-            sendMail()
+
         }
 
     }
@@ -49,6 +49,7 @@ node{
         } catch (err) {
             currentBuild.result = 'FAILURE'
             message=getBuildLog(currentBuild.rawBuild.getLog(1000))
+            sendMail()
             throw err
 
         } finally {
