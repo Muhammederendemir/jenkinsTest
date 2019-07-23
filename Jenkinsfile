@@ -48,14 +48,14 @@ node{
             message='Build message : '+STAGE_NAME+' completed'
         } catch (err) {
             currentBuild.result = 'FAILURE'
-
             message=getBuildLog(currentBuild.rawBuild.getLog(1000))
 
             throw err
 
         } finally {
-            sendMail()
+
             notifyStage(message)
+            sendMail()
         }
 
     }
