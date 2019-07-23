@@ -1,5 +1,6 @@
+def msg=''
 node {
-    def msg=''
+
     stage('checkout') {
         def message=null
         try {
