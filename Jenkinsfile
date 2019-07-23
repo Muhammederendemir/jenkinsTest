@@ -34,7 +34,7 @@ node {
         } finally {
 
             notifyStage(message)
-            sendMail($msg)
+            sendMail(msg)
         }
 
     }
@@ -202,8 +202,7 @@ def getBuildLog(list) {
 }
 
 def sendMail(String msg){
-
     mail to: 'mhmmderen2@gmail.com',
             subject: "Example Build: ${env.JOB_NAME} - Succees",
-            body: "${msg}"
+            body:msg
 }
