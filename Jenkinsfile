@@ -123,7 +123,6 @@ node{
         } catch (err) {
             currentBuild.result = 'FAILURE'
             message=getBuildLog(currentBuild.rawBuild.getLog(1000))
-            notifyStage(message)
             throw err
 
         } finally {
@@ -165,7 +164,7 @@ def notifyStage(String message){
     slackSend(channel:channelName ,color: colorCode, message: message)
     slackSend(channel:channelName ,color: '#000000', message: '')
 
-    msg+="\n"+stageName+"\n"+buildState+"\n\n"
+    msg+="\n"+stageName+"\n"+buildState+"\n\n"+message
 }
 
 
