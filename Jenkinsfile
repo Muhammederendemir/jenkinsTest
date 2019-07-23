@@ -37,6 +37,6 @@ node {
                 subject: "Example Build: ${env.JOB_NAME} - Succeess",
                 body: "Job Failed - \"${env.JOB_NAME}\"\n\n " +
                         "Build Number: ${env.BUILD_NUMBER}\n\n " +
-                        "Build Url :\n ${env.BUILD_URL}\n\n\n\n"
+                        "Build Url  :\n ${env.BUILD_URL}\n\n\n\n"
     }
 }
