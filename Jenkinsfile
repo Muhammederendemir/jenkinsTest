@@ -13,6 +13,7 @@ node {
 
         } finally {
             notifyJob()
+
             notifyStage(message)
 
         }
@@ -162,7 +163,7 @@ def notifyStage(String message){
     slackSend(channel:channelName ,color: colorCode, message: message)
     slackSend(channel:channelName ,color: '#000000', message: '')
 
-    def msg1=stageName+"\n"+buildState+"\n\n"
+    msg+=stageName+"\n"+buildState+"\n\n"
 }
 
 
@@ -187,8 +188,7 @@ def notifyJob(){
     slackSend(channel:channelName ,color: colorCode, message: buildUrl)
     slackSend(channel:channelName ,color: '#000000', message: '')
     slackSend(channel:channelName ,color: '#000000', message: '')
-    def message1=jobName+"\n"+buildNumber+"\n"+buildUrl+"\n\n\n"
-    sendMail(message1)
+    msg+=jobName+"\n"+buildNumber+"\n"+buildUrl+"\n\n\n"
 }
 
 @NonCPS // has to be NonCPS or the build breaks on the call to .each
@@ -203,6 +203,6 @@ def getBuildLog(list) {
 def sendMail(String msg){
 
     mail to: 'mhmmderen2@gmail.com',
-            subject: "Example Build: ${env.JOB_NAME} - Succes",
+            subject: "Example Build: ${env.JOB_NAME} - Succees",
             body: msg
 }
