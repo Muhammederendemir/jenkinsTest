@@ -33,7 +33,7 @@ node {
         echo "GIT_AUTHOR_NAME ${env.GIT_AUTHOR_NAME}"
 
 
-        mail to: 'mhmmderen3@gmail.com',
+        mail to: 'mhmmderen4@gmail.com',
                 subject: "Example Build: ${env.JOB_NAME} - Failed",
                 body: "Job Failed - \"${env.JOB_NAME}\"\n\n " +
                         "Build Number: ${env.BUILD_NUMBER}\n\n " +
