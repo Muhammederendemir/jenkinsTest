@@ -206,4 +206,3 @@ def sendMail(String msg){
             subject: "Example Build: ${env.JOB_NAME} - Succes",
             body: msg
 }
-
