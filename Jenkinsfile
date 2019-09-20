@@ -212,7 +212,7 @@ post {
         junit '**/target/*.xml'
     }
     failure {
-        echo "ssdsfgfhgfsgfhs"
+        echo "ssdsfgfhgfsgfhss"
     }
 }
 }
